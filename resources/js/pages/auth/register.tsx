@@ -1,6 +1,6 @@
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useState } from 'react';
 
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
@@ -23,6 +23,7 @@ export default function Register() {
         password: '',
         password_confirmation: '',
     });
+    const [passView, setPassView] = useState(false);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -70,10 +71,13 @@ export default function Register() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
+                        <div className='flex items-center justify-between w-full'>
+                            <Label htmlFor="password">Password</Label>
+                            <button className='cursor-pointer text-sm font-extrabold' onClick={() => setPassView(!passView)}>{passView ? 'Hide' : 'Show'}</button>
+                        </div>
                         <Input
                             id="password"
-                            type="password"
+                            type={passView ? 'text' : 'password'}
                             required
                             tabIndex={3}
                             autoComplete="new-password"
@@ -89,7 +93,7 @@ export default function Register() {
                         <Label htmlFor="password_confirmation">Confirm password</Label>
                         <Input
                             id="password_confirmation"
-                            type="password"
+                            type={passView ? 'text' : 'password'}
                             required
                             tabIndex={4}
                             autoComplete="new-password"
