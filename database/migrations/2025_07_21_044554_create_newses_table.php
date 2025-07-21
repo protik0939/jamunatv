@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('news_id');
             $table->string('title');
             $table->unsignedBigInteger('authors_id');
-            $table->foreign('authors_id')->references('authors_id')->on('authors')->onDelete('cascade');
+            $table->foreign('authors_id')->references('id')->on('authors')->onDelete('cascade');
             $table->string('image_url');
             $table->text('description');
             $table->timestamps();

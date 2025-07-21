@@ -17,4 +17,6 @@ Route::get("/", function (){
 
 Route::apiResource('newses', NewsesController::class);
 
-Route::apiResource('authors', AuthorsController::class);
+Route::apiResource( 'authors', AuthorsController::class);
+
+// Route::get('authors/{authors}', [AuthorsController::class, 'show']);

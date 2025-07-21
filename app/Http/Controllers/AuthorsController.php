@@ -27,21 +27,21 @@ class AuthorsController extends Controller
         ]);
 
         $authors = Authors::create($field);
-        return $authors;
+        return ['authors' => $authors];
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Authors $authors)
+    public function show(Authors $author)
     {
-        return $authors;
+        return $author;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Authors $authors)
+    public function update(Request $request, Authors $author)
     {
         $field = $request->validate([
             'name' => 'required',
@@ -49,15 +49,16 @@ class AuthorsController extends Controller
             'designation' => 'required',
         ]);
 
-        $authors->update($field);
-        return $authors;
+        $author->update($field);
+        return $author;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Authors $authors)
+    public function destroy(Authors $author)
     {
-        //
+        $author->delete();
+        return ['message'=> 'This post deleted'];
     }
 }
