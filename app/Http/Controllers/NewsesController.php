@@ -20,14 +20,31 @@ class NewsesController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'title' => 'required|max255',
-            'description' => 'required',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
-            'authors_id' => 'required',
-            'categories' => 'required|array',
+        try {
+            // dd($request->all());
+        $newsPost = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'image' => 'required|image|mimes:png,jpg,jpeg,webp',
+            'authors_id' => 'required|exists:authors,id',
+            'categories' => 'required',
         ]);
-        return $request;
+
+        // dd($newsPost);
+        if ($request->hasFile('image')) {
+            $imagepath = $request->file('image');
+            $extension = $imagepath->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $imagepath->move(public_path('storage'), $filename);
+            $newsPost['image_url'] = "storage/{$filename}";
+        }
+        $news = newses::create($newsPost);
+        return ['news' => $news];
+        } catch (\Exception $th) {
+
+            dd( $th);
+            throw $th;
+        }
     }
 
     /**
